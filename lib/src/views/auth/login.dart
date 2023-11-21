@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/config/router/route_names.dart';
+import '../../../core/widget/bg.dart';
+import '../../../core/widget/elevated_button.dart';
+import '../../../main.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,241 +16,216 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+
+  // Initially password is obscure
+  bool _obscureText = true;
+
+  var _emailController = TextEditingController();
+  var _passwordController = TextEditingController();
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  // Function to validate email format
+  bool isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: 640,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(children: [
-            Positioned(
-              top: 0,
-              child: Container(
-                width: 640,
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/bg.png'),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .8,
+          width: screenSize.width < 640 ? screenSize.width : 640,
+          height: screenSize.height,
+          child: Form(
+            key: _formKey,
+            child: Stack(children: [
+              Background(screenSize: screenSize),
+              Align(
+                alignment: Alignment.center,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      width: 257,
-                      // height: 104,
+                    Container(
+                      margin: EdgeInsets.only(top: screenSize.height * 0.1),
                       child: Text(
                         'Login Here',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF26551D),
-                          fontSize: 35,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 257,
-                      // height: 36,
                       child: Text(
                         'Welcome Back!\nyou’ve been missed',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF132513),
-                          fontSize: 24,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: const Color(0xFF132513),
+                            ),
                       ),
                     ),
                     SizedBox(
                       width: 313,
-                      height: 50,
-                      child: Stack(
+                      child: Column(
                         children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 313,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                    width: 3,
-                                    strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: Color(0xFF26551D),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFB7CAA9),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 5),
+                              child: TextFormField(
+                                controller: _emailController,
+                                style: const TextStyle(
+                                  color: Color(0xFF132513),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Phone / Email',
+                                  helperText: 'Phone / Email',
+                                  // labelText: 'Phone / Email',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: const Color(0xFF5E6E59),
+                                      ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  } else if (!isValidEmail(value)) {
+                                    return 'Please enter a valid email';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFB7CAA9),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 5),
+                              child: TextFormField(
+                                controller: _passwordController,
+                                enableSuggestions: false,
+                                obscureText: _obscureText,
+                                style: const TextStyle(
+                                  color: Color(0xFF132513),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: _toggle,
+                                    icon: Icon(
+                                      !_obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(5),
+                                  border: InputBorder.none,
+                                  helperText: 'Password',
+                                  hintText: 'Password',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: const Color(0xFF5E6E59),
+                                      ),
                                 ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                           ),
-                          const Positioned(
-                            left: 17,
-                            top: 14,
-                            child: SizedBox(
-                              width: 132,
-                              height: 27,
-                              child: Text(
-                                'Phone / Email',
-                                style: TextStyle(
-                                  color: Color(0xFF5E6E59),
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              const Text('Forgot Password? '),
+                              TextButton(
+                                child: const Text(
+                                  'Click Here',
                                 ),
-                              ),
-                            ),
+                                onPressed: () {
+                                  //signup screen
+                                },
+                              )
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: 313,
-                      height: 50,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 313,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 17,
-                            top: 11,
-                            child: SizedBox(
-                              width: 132,
-                              height: 27,
-                              child: Text(
-                                'Password',
-                                style: TextStyle(
-                                  color: Color(0xFF5E6E59),
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    // SizedBox(
+                    //   width: 313,
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: <Widget>[
+                    //       const Text('Forgot Password? '),
+                    //       TextButton(
+                    //         child: const Text(
+                    //           'Click Here',
+                    //         ),
+                    //         onPressed: () {
+                    //           //signup screen
+                    //         },
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    CustomGradientElevatedButton(
+                      minimumSize: const Size(313, 60),
+                      buttonText: Text(
+                        'Continue',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.w600),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 174,
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Forgot Password? ',
-                              style: TextStyle(
-                                color: Color(0xFF595959),
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                height: 0.12,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Click Here',
-                              style: TextStyle(
-                                color: Color(0xFF26551D),
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w700,
-                                height: 0.12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        context.goNamed(RouteNames.register.name);
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          // Here you can perform authentication or navigate to another screen
+                          // For demo purposes, print the email and password
+                          context.goNamed(RouteNames.register.name);
+                          log(_emailController.text, name: 'Email');
+                          log(_passwordController.text, name: 'Password');
+                        }
+                        // context.goNamed(RouteNames.login.name);
+                        // context.goNamed(RouteNames.register.name);
                       },
-                      child: SizedBox(
-                        width: 316,
-                        height: 50,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: Container(
-                                width: 316,
-                                height: 50,
-                                decoration: ShapeDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment(1.00, 0.00),
-                                    end: Alignment(-1, 0),
-                                    colors: [
-                                      Color(0xFF76A968),
-                                      Color(0xFF4E8649)
-                                    ],
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  shadows: const [
-                                    BoxShadow(
-                                      color: Color(0x3F000000),
-                                      blurRadius: 4,
-                                      offset: Offset(0, 4),
-                                      spreadRadius: 0,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Positioned(
-                              left: 120.18,
-                              top: 14,
-                              child: SizedBox(
-                                width: 76.67,
-                                child: Text(
-                                  'Continue',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                    height: 0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );

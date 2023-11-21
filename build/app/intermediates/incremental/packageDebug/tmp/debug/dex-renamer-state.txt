@@ -1,4 +1,0 @@
-#Thu Nov 16 14:28:27 PKT 2023
-base.0=/Users/skymedics/Development/Projects/freelancing/feedback/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

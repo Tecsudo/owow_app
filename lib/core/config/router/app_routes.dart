@@ -4,18 +4,18 @@ import 'package:feedback/src/views/reviews/rating.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../src/views/auth/login.dart';
-import '../../../src/views/on_boarding/on_boarding_end.dart';
+import '../../../src/views/welcome/welcome.dart';
 import 'route_names.dart';
 
 // 🌎 Project imports:
 
 final GoRouter routerConfig = GoRouter(
-  initialLocation: RouteNames.onBoarding.path,
+  initialLocation: RouteNames.welcome.path,
   routes: <RouteBase>[
     GoRoute(
-      path: RouteNames.onBoarding.path,
-      name: RouteNames.onBoarding.name,
-      builder: (context, state) => const OnBoardingEnd(),
+      path: RouteNames.welcome.path,
+      name: RouteNames.welcome.name,
+      builder: (context, state) => const Welcome(),
     ),
     GoRoute(
       path: RouteNames.login.path,
