@@ -121,7 +121,6 @@ class _WelcomeState extends State<Welcome> {
                 ],
               ),
             ),
-            Text(screenSize.toString()),
           ]),
         ),
       ),
