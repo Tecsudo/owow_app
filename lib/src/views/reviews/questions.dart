@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
 import '../../../main.dart';
+import 'components/page_four.dart';
 import 'components/page_one.dart';
 import 'components/page_three.dart';
 import 'components/page_two.dart';
@@ -21,6 +24,7 @@ class _QuestionsState extends State<Questions> {
     const PageOne(),
     const PageTwo(),
     const PageThree(),
+    const PageFour(),
   ];
 
   @override
@@ -94,7 +98,8 @@ class _QuestionsState extends State<Questions> {
                     _activePage == _pages.length - 1
                         ? GestureDetector(
                             onTap: () {
-                              // context.go(RouteNames.rating.path);
+                              context
+                                  .goNamed(RouteNames.marketingQuestion.name);
                             },
                             child: SizedBox(
                               width: 316,
