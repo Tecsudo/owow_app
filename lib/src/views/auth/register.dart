@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/config/router/route_names.dart';
+import '../../../core/widget/bg.dart';
+import '../../../main.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -19,19 +21,7 @@ class _RegisterState extends State<Register> {
           width: 640,
           height: MediaQuery.of(context).size.height,
           child: Stack(children: [
-            Positioned(
-              top: 0,
-              child: Container(
-                width: 640,
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/bg.png'),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
+            Background(screenSize: screenSize),
             Align(
               alignment: Alignment.center,
               child: SizedBox(

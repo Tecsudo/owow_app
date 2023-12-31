@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/widget/bg.dart';
+import '../../../main.dart';
 import 'components/page_one.dart';
 import 'components/page_three.dart';
 import 'components/page_two.dart';
@@ -29,19 +31,7 @@ class _QuestionsState extends State<Questions> {
           width: 640,
           height: MediaQuery.of(context).size.height,
           child: Stack(children: [
-            Positioned(
-              top: 0,
-              child: Container(
-                width: 640,
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/bg.png'),
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
+            Background(screenSize: screenSize),
             Align(
               alignment: Alignment.topCenter,
               child: SizedBox(
@@ -63,20 +53,18 @@ class _QuestionsState extends State<Questions> {
                     SizedBox(
                         width: 316,
                         height: 300,
-                        child: Expanded(
-                            flex: 1,
-                            child: PageView.builder(
-                              controller: _pageController,
-                              onPageChanged: (int page) {
-                                setState(() {
-                                  _activePage = page;
-                                });
-                              },
-                              itemCount: _pages.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return _pages[index % _pages.length];
-                              },
-                            ))),
+                        child: PageView.builder(
+                          controller: _pageController,
+                          onPageChanged: (int page) {
+                            setState(() {
+                              _activePage = page;
+                            });
+                          },
+                          itemCount: _pages.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _pages[index % _pages.length];
+                          },
+                        )),
                     SizedBox(
                       width: 300,
                       child: Row(
