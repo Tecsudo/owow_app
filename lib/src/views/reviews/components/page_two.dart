@@ -28,7 +28,6 @@ class _PageTwoState extends State<PageTwo> {
               fontSize: 24,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
-              height: 0,
             ),
           ),
         ),

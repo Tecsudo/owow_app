@@ -11,4 +11,5 @@ class RouteNames {
   static const register = RouteInfo('register', '/register');
   static const rating = RouteInfo('rating', '/rating');
   static const question = RouteInfo('question', '/question');
+  static const restaurant = RouteInfo('restaurant', '/restaurant');
 }

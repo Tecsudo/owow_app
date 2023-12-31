@@ -27,7 +27,6 @@ class _PageOneState extends State<PageOne> {
               fontSize: 24,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
-              height: 0,
             ),
           ),
         ),

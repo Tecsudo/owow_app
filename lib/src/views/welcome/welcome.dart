@@ -42,7 +42,7 @@ class _WelcomeState extends State<Welcome> {
                     height: screenSize.height * .4,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/auth.png'),
+                        image: AssetImage('assets/images/auth.png'),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -185,7 +185,7 @@ class _WelcomeState extends State<Welcome> {
                   //                         fontSize: 14,
                   //                         fontFamily: 'Poppins',
                   //                         fontWeight: FontWeight.w600,
-                  //                         height: 0,
+                  //                          
                   //                       ),
                   //                     ),
                   //                   ),
@@ -233,7 +233,7 @@ class _WelcomeState extends State<Welcome> {
                   //                         fontSize: 14,
                   //                         fontFamily: 'Poppins',
                   //                         fontWeight: FontWeight.w600,
-                  //                         height: 0,
+                  //                          
                   //                       ),
                   //                     ),
                   //                   ),

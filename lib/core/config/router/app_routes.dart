@@ -1,6 +1,7 @@
 import 'package:feedback/src/views/auth/register.dart';
 import 'package:feedback/src/views/reviews/questions.dart';
 import 'package:feedback/src/views/reviews/rating.dart';
+import 'package:feedback/src/views/reviews/restaurant.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../src/views/auth/login.dart';
@@ -10,7 +11,7 @@ import 'route_names.dart';
 // 🌎 Project imports:
 
 final GoRouter routerConfig = GoRouter(
-  initialLocation: RouteNames.welcome.path,
+  initialLocation: RouteNames.restaurant.path,
   routes: <RouteBase>[
     GoRoute(
       path: RouteNames.welcome.path,
@@ -36,6 +37,12 @@ final GoRouter routerConfig = GoRouter(
       path: RouteNames.question.path,
       name: RouteNames.question.name,
       builder: (context, state) => const Questions(),
+    ),
+
+    GoRoute(
+      path: RouteNames.restaurant.path,
+      name: RouteNames.restaurant.name,
+      builder: (context, state) => const Restaurant(),
     ),
     // GoRoute(
     //     path: '/home',

@@ -23,7 +23,6 @@ class _PageThreeState extends State<PageThree> {
               fontSize: 24,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w500,
-              height: 0,
             ),
           ),
         ),
@@ -42,7 +41,6 @@ class _PageThreeState extends State<PageThree> {
                   fontSize: 18,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w400,
-                  height: 0,
                 ),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -52,7 +50,6 @@ class _PageThreeState extends State<PageThree> {
                     fontSize: 18,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    height: 0,
                   ),
                 ),
               ),

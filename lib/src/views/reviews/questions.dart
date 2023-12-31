@@ -36,7 +36,7 @@ class _QuestionsState extends State<Questions> {
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('images/bg.png'),
+                    image: AssetImage('assets/images/bg.png'),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -55,7 +55,7 @@ class _QuestionsState extends State<Questions> {
                       height: 300,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('images/questions.png'),
+                          image: AssetImage('assets/images/questions.png'),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -154,7 +154,6 @@ class _QuestionsState extends State<Questions> {
                                           fontSize: 14,
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w600,
-                                          height: 0,
                                         ),
                                       ),
                                     ),

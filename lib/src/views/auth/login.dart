@@ -93,7 +93,6 @@ class _LoginState extends State<Login> {
                                   color: Color(0xFF132513),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
-                                  height: 0,
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -135,7 +134,6 @@ class _LoginState extends State<Login> {
                                   color: Color(0xFF132513),
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
-                                  height: 0,
                                 ),
                                 decoration: InputDecoration(
                                   suffixIcon: IconButton(

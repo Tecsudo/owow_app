@@ -29,7 +29,7 @@ class _RatingState extends State<Rating> {
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('images/bg.png'),
+                    image: AssetImage('assets/images/bg.png'),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -48,7 +48,7 @@ class _RatingState extends State<Rating> {
                       height: 300,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('images/blank.png'),
+                          image: AssetImage('assets/images/blank.png'),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -258,7 +258,6 @@ class _RatingState extends State<Rating> {
                                     fontSize: 14,
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w600,
-                                    height: 0,
                                   ),
                                 ),
                               ),
