@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'Phone / Email',
+                                  hintText: '03xxxxxxxxx / email@example.com',
                                   helperText: 'Phone / Email',
                                   // labelText: 'Phone / Email',
                                   hintStyle: Theme.of(context)
@@ -145,8 +145,8 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   border: InputBorder.none,
+                                  hintText: '********',
                                   helperText: 'Password',
-                                  hintText: 'Password',
                                   hintStyle: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
@@ -211,7 +211,9 @@ class _LoginState extends State<Login> {
                           _formKey.currentState!.save();
                           // Here you can perform authentication or navigate to another screen
                           // For demo purposes, print the email and password
-                          context.goNamed(RouteNames.register.name);
+                          context.go(RouteNames.rating.path);
+
+                          // context.goNamed(RouteNames.register.name);
                           log(_emailController.text, name: 'Email');
                           log(_passwordController.text, name: 'Password');
                         }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
+import '../../../core/widget/elevated_button.dart';
 import '../../../main.dart';
 
 class Register extends StatefulWidget {
@@ -13,6 +14,17 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
+
+  var _emailController = TextEditingController();
+  var _phoneController = TextEditingController();
+  var _passwordController = TextEditingController();
+
+  // Function to validate email format
+  bool isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,220 +32,190 @@ class _RegisterState extends State<Register> {
         child: SizedBox(
           width: 640,
           height: MediaQuery.of(context).size.height,
-          child: Stack(children: [
-            Background(screenSize: screenSize),
-            Align(
-              alignment: Alignment.center,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      width: 257,
-                      // height: 104,
-                      child: Text(
-                        'Create Account',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF26551D),
-                          fontSize: 35,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
+          child: Form(
+            key: _formKey,
+            child: Stack(children: [
+              Background(screenSize: screenSize),
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * .8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 257,
+                        // height: 104,
+                        child: Text(
+                          'Create Account',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF26551D),
+                            fontSize: 35,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 400,
-                      // height: 36,
-                      child: Text(
-                        'Create a account \nto explore all the discounts',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Color(0xFF132513),
-                          fontSize: 24,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
+                      const SizedBox(
+                        width: 400,
+                        // height: 36,
+                        child: Text(
+                          'Create a account \nto explore all the discounts',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color(0xFF132513),
+                            fontSize: 24,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 313,
-                      height: 50,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 313,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 17,
-                            top: 11,
-                            child: SizedBox(
-                              width: 132,
-                              height: 27,
-                              child: Text(
-                                'Email',
-                                style: TextStyle(
-                                  color: Color(0xFF5E6E59),
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 313,
-                      height: 50,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 313,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 17,
-                            top: 11,
-                            child: SizedBox(
-                              width: 132,
-                              height: 27,
-                              child: Text(
-                                'Phone',
-                                style: TextStyle(
-                                  color: Color(0xFF5E6E59),
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 313,
-                      height: 50,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              width: 313,
-                              height: 50,
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5)),
-                              ),
-                            ),
-                          ),
-                          const Positioned(
-                            left: 17,
-                            top: 11,
-                            child: SizedBox(
-                              width: 132,
-                              height: 27,
-                              child: Text(
-                                'Password',
-                                style: TextStyle(
-                                  color: Color(0xFF5E6E59),
-                                  fontSize: 18,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        context.go(RouteNames.rating.path);
-                      },
-                      child: SizedBox(
-                        width: 316,
-                        height: 50,
-                        child: Stack(
+                      SizedBox(
+                        width: 313,
+                        child: Column(
                           children: [
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: Container(
-                                width: 316,
-                                height: 50,
-                                decoration: ShapeDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment(1.00, 0.00),
-                                    end: Alignment(-1, 0),
-                                    colors: [
-                                      Color(0xFF76A968),
-                                      Color(0xFF4E8649)
-                                    ],
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFB7CAA9),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 5),
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  style: const TextStyle(
+                                    color: Color(0xFF132513),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5)),
-                                  shadows: const [
-                                    BoxShadow(
-                                      color: Color(0x3F000000),
-                                      blurRadius: 4,
-                                      offset: Offset(0, 4),
-                                      spreadRadius: 0,
-                                    )
-                                  ],
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'email@example.com',
+                                    helperText: 'Email',
+                                    // labelText: 'Phone / Email',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: const Color(0xFF5E6E59),
+                                        ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    } else if (!isValidEmail(value)) {
+                                      return 'Please enter a valid email';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ),
-                            const Positioned(
-                              left: 120.18,
-                              top: 14,
-                              child: SizedBox(
-                                width: 76.67,
-                                child: Text(
-                                  'Continue',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
+                            const SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFB7CAA9),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 5),
+                                child: TextFormField(
+                                  controller: _phoneController,
+                                  style: const TextStyle(
+                                    color: Color(0xFF132513),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
                                   ),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: '03xxxxxxxxx',
+                                    helperText: 'Phone',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: const Color(0xFF5E6E59),
+                                        ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your phone number';
+                                    }
+                                    return null;
+                                  },
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFB7CAA9),
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 5),
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  enableSuggestions: false,
+                                  style: const TextStyle(
+                                    color: Color(0xFF132513),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: '********',
+                                    helperText: 'Password',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: const Color(0xFF5E6E59),
+                                        ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your password';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
                           ],
                         ),
                       ),
-                    ),
-                  ],
+                      CustomGradientElevatedButton(
+                        minimumSize: const Size(313, 60),
+                        buttonText: Text(
+                          'Continue',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge
+                              ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  fontWeight: FontWeight.w600),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            context.go(RouteNames.rating.path);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );
