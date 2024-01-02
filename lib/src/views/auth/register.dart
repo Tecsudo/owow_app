@@ -24,10 +24,10 @@ class _RegisterState extends State<Register> {
   // Initially password is obscure
   bool _obscureText = true;
 
-  TextEditingController _emailOrPhoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final _emailOrPhoneController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  String _gender = '';
+  late String _gender;
 
   // Toggles the password show status
   void _toggle() {
@@ -36,9 +36,9 @@ class _RegisterState extends State<Register> {
     });
   }
 
-  void _setGender(String value) {
+  void _setGender({String gender = 'male'}) {
     setState(() {
-      _gender = value;
+      _gender = gender;
     });
   }
 
@@ -52,7 +52,7 @@ class _RegisterState extends State<Register> {
 
   @override
   void initState() {
-    _setGender('Male');
+    _setGender();
     super.initState();
   }
 
@@ -238,9 +238,11 @@ class _RegisterState extends State<Register> {
                                 selectedColor: Colors.white,
                                 unSelectedColor: Colors.black,
                                 textStyle: TextStyle(fontSize: 16)),
-                            radioButtonValue: (value) {
-                              _setGender(value);
-                            },
+                            radioButtonValue: (val) => _setGender(gender: val),
+
+                            // (value) {
+                            //   _setGender(value);
+                            // },
                             selectedColor:
                                 Theme.of(context).colorScheme.primary,
                           ),

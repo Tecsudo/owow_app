@@ -212,7 +212,7 @@ class _RatingState extends State<Rating> {
                             fontWeight: FontWeight.w600),
                       ),
                       onPressed: () {
-                        context.goNamed(RouteNames.register.name);
+                        context.goNamed(RouteNames.question.name);
                       },
                     ),
                     // GestureDetector(

@@ -27,10 +27,10 @@ class _LoginState extends State<Login> {
   // Initially password is obscure
   bool _obscureText = true;
 
-  TextEditingController _emailOrPhoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final _emailOrPhoneController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  // Toggles the password show status
+  // Toggles the password show status/*  */
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -135,18 +135,12 @@ class _LoginState extends State<Login> {
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-// <<<<<<< Updated upstream
-//                                   hintText: '03xxxxxxxxx / email@example.com',
-//                                   helperText: 'Phone / Email',
-//                                   // labelText: 'Phone / Email',
-// =======
                                   hintText: _isEnteringPhoneNumber
                                       ? 'user@exapmle.com'
                                       : '03xxxxxxxxx',
                                   helperText: _isEnteringPhoneNumber
                                       ? 'Email'
                                       : 'Phone',
-// >>>>>>> Stashed changes
                                   hintStyle: Theme.of(context)
                                       .textTheme
                                       .bodyLarge
