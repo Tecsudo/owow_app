@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'core/config/router/app_routes.dart';

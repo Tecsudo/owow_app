@@ -1,5 +1,7 @@
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 import '../../../core/config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
@@ -14,15 +16,44 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final _formKey = GlobalKey<FormState>();
+  final _registrationFormKey = GlobalKey<FormState>();
 
-  var _emailController = TextEditingController();
-  var _phoneController = TextEditingController();
-  var _passwordController = TextEditingController();
+  // Switch between email and phone number
+  bool _isEnteringPhoneNumber = false;
 
-  // Function to validate email format
-  bool isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  // Initially password is obscure
+  bool _obscureText = true;
+
+  TextEditingController _emailOrPhoneController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  String _gender = '';
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _setGender(String value) {
+    setState(() {
+      _gender = value;
+    });
+  }
+
+  bool isEmailOrPhoneNumber(String input) {
+    bool isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(input);
+    bool isPhoneNumber = RegExp(r'^03[0-9]{9}$')
+        .hasMatch(input); // Assuming Pakistani phone number format
+
+    return isEmail || isPhoneNumber;
+  }
+
+  @override
+  void initState() {
+    _setGender('Male');
+    super.initState();
   }
 
   @override
@@ -30,188 +61,217 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: 640,
-          height: MediaQuery.of(context).size.height,
+          width: screenSize.width < 640 ? screenSize.width : 640,
+          height: screenSize.height,
           child: Form(
-            key: _formKey,
+            key: _registrationFormKey,
             child: Stack(children: [
               Background(screenSize: screenSize),
               Align(
                 alignment: Alignment.center,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * .8,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 257,
-                        // height: 104,
-                        child: Text(
-                          'Create Account',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF26551D),
-                            fontSize: 35,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: screenSize.height * 0.1),
+                      child: Text(
+                        'Create Account',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.copyWith(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                height: 0,
+                                color: const Color(0xFF26551D),
+                                fontSize: 35),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: Text(
+                        'Create a account \nto explore all the discounts',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: const Color(0xFF132513),
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              height: 0,
+                            ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 313,
+                      child: Column(
+                        children: [
+                          LiteRollingSwitch(
+                            value: _isEnteringPhoneNumber,
+                            onTap: () {},
+                            onDoubleTap: () {},
+                            onSwipe: () {},
+                            textOn: 'Email',
+                            textOff: 'Phone',
+                            colorOn: const Color(0xFF4E8649),
+                            colorOff: const Color(0xFF4E8649),
+                            iconOn: Icons.email,
+                            iconOff: Icons.phone,
+                            onChanged: (bool state) {
+                              setState(() {
+                                _isEnteringPhoneNumber = state;
+                              });
+                            },
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 400,
-                        // height: 36,
-                        child: Text(
-                          'Create a account \nto explore all the discounts',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Color(0xFF132513),
-                            fontSize: 24,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w500,
+                          const SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFB7CAA9),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 5),
+                              child: TextFormField(
+                                controller: _emailOrPhoneController,
+                                style: const TextStyle(
+                                  color: Color(0xFF132513),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: _isEnteringPhoneNumber
+                                      ? 'user@exapmle.com'
+                                      : '03xxxxxxxxx',
+                                  helperText: _isEnteringPhoneNumber
+                                      ? 'Email'
+                                      : 'Phone',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: const Color(0xFF5E6E59),
+                                      ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your ${_isEnteringPhoneNumber ? 'email' : 'phone'}';
+                                  } else if (!isEmailOrPhoneNumber(value)) {
+                                    return 'Please enter a valid ${_isEnteringPhoneNumber ? 'email' : 'phone'}';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 313,
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 5),
-                                child: TextFormField(
-                                  controller: _emailController,
-                                  style: const TextStyle(
-                                    color: Color(0xFF132513),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'email@example.com',
-                                    helperText: 'Email',
-                                    // labelText: 'Phone / Email',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: const Color(0xFF5E6E59),
-                                        ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
-                                    } else if (!isValidEmail(value)) {
-                                      return 'Please enter a valid email';
-                                    }
-                                    return null;
-                                  },
+                          const SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFB7CAA9),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 15, right: 15, top: 5),
+                              child: TextFormField(
+                                controller: _passwordController,
+                                enableSuggestions: false,
+                                obscureText: _obscureText,
+                                style: const TextStyle(
+                                  color: Color(0xFF132513),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0,
                                 ),
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: _toggle,
+                                    icon: Icon(
+                                      !_obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                    ),
+                                  ),
+                                  border: InputBorder.none,
+                                  helperText: 'Password',
+                                  hintText: 'Password',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                        color: const Color(0xFF5E6E59),
+                                      ),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 5),
-                                child: TextFormField(
-                                  controller: _phoneController,
-                                  style: const TextStyle(
-                                    color: Color(0xFF132513),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: '03xxxxxxxxx',
-                                    helperText: 'Phone',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: const Color(0xFF5E6E59),
-                                        ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your phone number';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
+                          ),
+                          const SizedBox(height: 20),
+                          CustomRadioButton(
+                            enableShape: true,
+                            defaultSelected: 'Male',
+                            customShape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
                             ),
-                            const SizedBox(height: 20),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFB7CAA9),
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 5),
-                                child: TextFormField(
-                                  controller: _passwordController,
-                                  enableSuggestions: false,
-                                  style: const TextStyle(
-                                    color: Color(0xFF132513),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: '********',
-                                    helperText: 'Password',
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge
-                                        ?.copyWith(
-                                          color: const Color(0xFF5E6E59),
-                                        ),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
+                            elevation: 0,
+                            absoluteZeroSpacing: true,
+                            unSelectedColor:
+                                Theme.of(context).colorScheme.surface,
+                            buttonLables: const [
+                              'Male',
+                              'Female',
+                              'Other',
+                            ],
+                            buttonValues: const [
+                              "Male",
+                              "Female",
+                              "Other",
+                            ],
+                            buttonTextStyle: const ButtonTextStyle(
+                                selectedColor: Colors.white,
+                                unSelectedColor: Colors.black,
+                                textStyle: TextStyle(fontSize: 16)),
+                            radioButtonValue: (value) {
+                              _setGender(value);
+                            },
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                          ),
+                        ],
                       ),
-                      CustomGradientElevatedButton(
-                        minimumSize: const Size(313, 60),
-                        buttonText: Text(
-                          'Continue',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.w600),
-                        ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            context.go(RouteNames.rating.path);
-                          }
-                        },
+                    ),
+                    CustomGradientElevatedButton(
+                      minimumSize: const Size(313, 60),
+                      buttonText: Text(
+                        'Continue',
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.w600),
                       ),
-                    ],
-                  ),
+                      onPressed: () {
+                        if (_registrationFormKey.currentState!.validate()) {
+                          _registrationFormKey.currentState!.save();
+
+                          // userRegistration(
+                          //     info: UserInfo(
+                          //       password: _passwordController.text,
+                          //       isEnteringPhoneNumber: _isEnteringPhoneNumber,
+                          //       emailOrPhone: _emailOrPhoneController.text,
+                          //     ),
+                          //     gender: _gender);
+
+                          context.go(RouteNames.rating.path);
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ]),
