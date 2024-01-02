@@ -27,6 +27,7 @@ class _RegisterState extends State<Register> {
   final _emailOrPhoneController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  // ignore: unused_field
   late String _gender;
 
   // Toggles the password show status
