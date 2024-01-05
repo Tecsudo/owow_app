@@ -5,7 +5,6 @@ import 'package:feedback/core/widget/bg.dart';
 import 'package:feedback/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 
 import '../../../config/router/route_names.dart';
@@ -23,7 +22,6 @@ class _RestaurantState extends State<Restaurant> {
   final _restaurantController = TextEditingController();
   final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   String? code;
-  MobileScannerController cameraController = MobileScannerController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,54 +58,19 @@ class _RestaurantState extends State<Restaurant> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 300,
-                            height: 300,
-                            child: MobileScanner(
-                              // fit: BoxFit.contain,
-                              controller: cameraController,
-                              onDetect: (capture) {
-                                final List<Barcode> barcodes = capture.barcodes;
-                                final Uint8List? image = capture.image;
-                                for (final barcode in barcodes) {
-                                  code = barcode.rawValue;
-                                  debugPrint(
-                                      'Barcode found! ${barcode.rawValue}');
-                                }
+                          ElevatedButton(
+                              onPressed: () {
+                                _qrBarCodeScannerDialogPlugin
+                                    .getScannedQrBarCode(
+                                        context: context,
+                                        onCode: (code) {
+                                          setState(() {
+                                            this.code = code;
+                                            log(code!);
+                                          });
+                                        });
                               },
-                            ),
-                          ),
-                          IconButton(
-                            color: Colors.red,
-                            icon: ValueListenableBuilder(
-                              valueListenable:
-                                  cameraController.cameraFacingState,
-                              builder: (context, state, child) {
-                                switch (state as CameraFacing) {
-                                  case CameraFacing.front:
-                                    return const Icon(Icons.camera_front);
-                                  case CameraFacing.back:
-                                    return const Icon(Icons.camera_rear);
-                                }
-                              },
-                            ),
-                            iconSize: 32.0,
-                            onPressed: () => cameraController.switchCamera(),
-                          ),
-                          Text(code ?? "Click and hold to scan"),
-                          // ElevatedButton(
-                          //     onPressed: () {
-                          //       _qrBarCodeScannerDialogPlugin
-                          //           .getScannedQrBarCode(
-                          //               context: context,
-                          //               onCode: (code) {
-                          //                 setState(() {
-                          //                   this.code = code;
-                          //                   log(code!);
-                          //                 });
-                          //               });
-                          //     },
-                          //     child: Text(code ?? "Click and hold to scan")),
+                              child: Text(code ?? "Click and hold to scan")),
 
                           // Container(
                           //   decoration: BoxDecoration(

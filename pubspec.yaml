@@ -43,7 +43,6 @@ dependencies:
   http: ^1.1.0
   custom_radio_grouped_button: ^2.2.1
   qr_bar_code_scanner_dialog: ^0.0.5
-  mobile_scanner: ^3.5.5
 
 dev_dependencies:
   flutter_test:
