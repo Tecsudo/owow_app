@@ -60,23 +60,6 @@ class _RestaurantState extends State<Restaurant> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          IconButton(
-                            color: Colors.white,
-                            icon: ValueListenableBuilder(
-                              valueListenable:
-                                  cameraController.cameraFacingState,
-                              builder: (context, state, child) {
-                                switch (state as CameraFacing) {
-                                  case CameraFacing.front:
-                                    return const Icon(Icons.camera_front);
-                                  case CameraFacing.back:
-                                    return const Icon(Icons.camera_rear);
-                                }
-                              },
-                            ),
-                            iconSize: 32.0,
-                            onPressed: () => cameraController.switchCamera(),
-                          ),
                           SizedBox(
                             width: 300,
                             height: 300,
@@ -93,6 +76,23 @@ class _RestaurantState extends State<Restaurant> {
                                 }
                               },
                             ),
+                          ),
+                          IconButton(
+                            color: Colors.white,
+                            icon: ValueListenableBuilder(
+                              valueListenable:
+                                  cameraController.cameraFacingState,
+                              builder: (context, state, child) {
+                                switch (state as CameraFacing) {
+                                  case CameraFacing.front:
+                                    return const Icon(Icons.camera_front);
+                                  case CameraFacing.back:
+                                    return const Icon(Icons.camera_rear);
+                                }
+                              },
+                            ),
+                            iconSize: 32.0,
+                            onPressed: () => cameraController.switchCamera(),
                           ),
                           Text(code ?? "Click and hold to scan"),
                           // ElevatedButton(
