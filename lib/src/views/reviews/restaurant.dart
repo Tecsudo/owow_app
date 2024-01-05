@@ -1,9 +1,11 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:feedback/core/widget/bg.dart';
 import 'package:feedback/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_bar_code_scanner_dialog/qr_bar_code_scanner_dialog.dart';
 
 import '../../../config/router/route_names.dart';
@@ -57,19 +59,42 @@ class _RestaurantState extends State<Restaurant> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                _qrBarCodeScannerDialogPlugin
-                                    .getScannedQrBarCode(
-                                        context: context,
-                                        onCode: (code) {
-                                          setState(() {
-                                            this.code = code;
-                                            log(code!);
-                                          });
-                                        });
+                          SizedBox(
+                            width: 300,
+                            height: 300,
+                            child: MobileScanner(
+                              // fit: BoxFit.contain,
+                              controller: MobileScannerController(
+                                detectionSpeed: DetectionSpeed.normal,
+                                facing: CameraFacing.front,
+                                torchEnabled: true,
+                              ),
+                              onDetect: (capture) {
+                                final List<Barcode> barcodes = capture.barcodes;
+                                final Uint8List? image = capture.image;
+                                for (final barcode in barcodes) {
+                                  code = barcode.rawValue;
+                                  debugPrint(
+                                      'Barcode found! ${barcode.rawValue}');
+                                }
                               },
-                              child: Text(code ?? "Click me")),
+                            ),
+                          ),
+                          Text(code ?? "Click and hold to scan"),
+                          // ElevatedButton(
+                          //     onPressed: () {
+                          //       _qrBarCodeScannerDialogPlugin
+                          //           .getScannedQrBarCode(
+                          //               context: context,
+                          //               onCode: (code) {
+                          //                 setState(() {
+                          //                   this.code = code;
+                          //                   log(code!);
+                          //                 });
+                          //               });
+                          //     },
+                          //     child: Text(code ?? "Click and hold to scan")),
+
                           // Container(
                           //   decoration: BoxDecoration(
                           //     color: const Color(0xFFB7CAA9),
