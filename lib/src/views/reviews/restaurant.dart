@@ -64,11 +64,6 @@ class _RestaurantState extends State<Restaurant> {
                             height: 300,
                             child: MobileScanner(
                               // fit: BoxFit.contain,
-                              controller: MobileScannerController(
-                                detectionSpeed: DetectionSpeed.normal,
-                                facing: CameraFacing.front,
-                                torchEnabled: true,
-                              ),
                               onDetect: (capture) {
                                 final List<Barcode> barcodes = capture.barcodes;
                                 final Uint8List? image = capture.image;
