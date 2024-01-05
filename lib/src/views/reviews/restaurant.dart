@@ -78,7 +78,7 @@ class _RestaurantState extends State<Restaurant> {
                             ),
                           ),
                           IconButton(
-                            color: Colors.white,
+                            color: Colors.red,
                             icon: ValueListenableBuilder(
                               valueListenable:
                                   cameraController.cameraFacingState,
