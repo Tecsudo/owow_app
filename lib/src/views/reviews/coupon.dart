@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/config/router/route_names.dart';
+import '../../../config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
 import '../../../main.dart';
 
