@@ -6,9 +6,9 @@ import 'package:feedback/src/views/reviews/restaurant.dart';
 import 'package:feedback/src/views/reviews/thanks.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../src/views/auth/login.dart';
-import '../../../src/views/reviews/coupon.dart';
-import '../../../src/views/welcome/welcome.dart';
+import '../../src/views/auth/login.dart';
+import '../../src/views/reviews/coupon.dart';
+import '../../src/views/welcome/welcome.dart';
 import 'route_names.dart';
 
 // 🌎 Project imports:

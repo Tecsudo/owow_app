@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/config/router/route_names.dart';
+import '../../../config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
 import '../../../core/widget/elevated_button.dart';
 import '../../../main.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import 'core/config/router/app_routes.dart';
-import 'core/config/theme/theme.dart';
+import 'config/router/app_routes.dart';
+import 'config/theme/theme.dart';
 
 void main() {
   runApp(const MyApp());

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
-import '../../../core/config/router/route_names.dart';
+import '../../../config/router/route_names.dart';
 import '../../../core/widget/bg.dart';
 import '../../../core/widget/elevated_button.dart';
 import '../../../main.dart';
