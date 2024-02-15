@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:feedback/core/widget/bg.dart';
 import 'package:feedback/main.dart';
@@ -19,7 +18,6 @@ class Restaurant extends StatefulWidget {
 
 class _RestaurantState extends State<Restaurant> {
   final _formKey = GlobalKey<FormState>();
-  final _restaurantController = TextEditingController();
   final _qrBarCodeScannerDialogPlugin = QrBarCodeScannerDialog();
   String? code;
 
