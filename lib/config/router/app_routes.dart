@@ -61,58 +61,5 @@ final GoRouter routerConfig = GoRouter(
       name: RouteNames.thanks.name,
       builder: (context, state) => const Thanks(),
     ),
-    // GoRoute(
-    //     path: '/home',
-    //     name: 'home',
-    //     builder: (context, state) => const UserDashboard(),
-    //     routes: <RouteBase>[
-    //       GoRoute(
-    //         path: 'pathology',
-    //         name: 'pathology',
-    //         builder: (context, state) => const PathologyReportListView(),
-    //       ),
-    //       GoRoute(
-    //         path: 'radiology',
-    //         name: 'radiology',
-    //         builder: (context, state) => const RadiologyReportListView(),
-    //       ),
-    //       GoRoute(
-    //         path: 'appointment',
-    //         name: 'appointment',
-    //         builder: (context, state) => const AppointmentHome(),
-    //       ),
-    //       GoRoute(
-    //         path: 'complaint',
-    //         name: 'complaint',
-    //         builder: (context, state) => const ComplaintView(),
-    //       ),
-    //     ]),
   ],
 );
-
-
-
-/* 
-
-GoRoute(
-      path: '/splash',
-      name: 'splash',
-      builder: (context, state) => const SplashHome(),
-    ),
-    GoRoute(
-      path: '/login',
-      name: 'login',
-      pageBuilder: (context, state) {
-        return CustomTransitionPage(
-          child: const LoginHome(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(
-              opacity: CurveTween(curve: Curves.easeIn).animate(animation),
-              child: child,
-            );
-          },
-        );
-      },
-    ),
-
- */

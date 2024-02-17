@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../config/router/route_names.dart';
-import '../../../core/widget/bg.dart';
-import '../../../main.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
 
 class Coupon extends StatefulWidget {
   const Coupon({super.key});
@@ -18,10 +18,12 @@ class _CouponState extends State<Coupon> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: screenSize.width < 640 ? screenSize.width : 640,
-          height: screenSize.height,
+          width: AppConstant.screenSize.width < 640
+              ? AppConstant.screenSize.width
+              : 640,
+          height: AppConstant.screenSize.height,
           child: Stack(children: [
-            Background(screenSize: screenSize),
+            Background(screenSize: AppConstant.screenSize),
             Align(
               alignment: Alignment.center,
               child: Column(
@@ -29,11 +31,11 @@ class _CouponState extends State<Coupon> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: screenSize.height * .1,
+                    height: AppConstant.screenSize.height * .1,
                   ),
                   Container(
-                    width: screenSize.width * .8,
-                    height: screenSize.height * .4,
+                    width: AppConstant.screenSize.width * .8,
+                    height: AppConstant.screenSize.height * .4,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/coupon.png'),
@@ -42,7 +44,7 @@ class _CouponState extends State<Coupon> {
                     ),
                   ),
                   SizedBox(
-                    height: screenSize.height * .05,
+                    height: AppConstant.screenSize.height * .05,
                   ),
                   const SizedBox(
                     width: 304,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../config/router/route_names.dart';
-import '../../../core/widget/bg.dart';
-import '../../../main.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
 import 'components/page_one.dart';
 import 'components/page_three.dart';
 import 'components/page_two.dart';
@@ -34,7 +34,7 @@ class _QuestionsState extends State<Questions> {
           width: 640,
           height: MediaQuery.of(context).size.height,
           child: Stack(children: [
-            Background(screenSize: screenSize),
+            Background(screenSize: AppConstant.screenSize),
             Align(
               alignment: Alignment.topCenter,
               child: SizedBox(

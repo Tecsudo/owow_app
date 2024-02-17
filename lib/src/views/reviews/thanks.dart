@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/widget/bg.dart';
-import '../../../main.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
 
 class Thanks extends StatefulWidget {
   const Thanks({super.key});
@@ -16,10 +16,12 @@ class _ThanksState extends State<Thanks> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: screenSize.width < 640 ? screenSize.width : 640,
-          height: screenSize.height,
+          width: AppConstant.screenSize.width < 640
+              ? AppConstant.screenSize.width
+              : 640,
+          height: AppConstant.screenSize.height,
           child: Stack(children: [
-            Background(screenSize: screenSize),
+            Background(screenSize: AppConstant.screenSize),
             Align(
               alignment: Alignment.center,
               child: Column(
@@ -27,11 +29,11 @@ class _ThanksState extends State<Thanks> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: screenSize.height * .1,
+                    height: AppConstant.screenSize.height * .1,
                   ),
                   Container(
-                    width: screenSize.width * .8,
-                    height: screenSize.height * .4,
+                    width: AppConstant.screenSize.width * .8,
+                    height: AppConstant.screenSize.height * .4,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/thanks.png'),
@@ -40,7 +42,7 @@ class _ThanksState extends State<Thanks> {
                     ),
                   ),
                   SizedBox(
-                    height: screenSize.height * .05,
+                    height: AppConstant.screenSize.height * .05,
                   ),
                   const SizedBox(
                     width: 304,

@@ -1,13 +1,13 @@
-import 'dart:developer';
-
+import 'package:feedback/src/model/rating.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../config/router/route_names.dart';
-import '../../../core/widget/bg.dart';
-import '../../../core/widget/elevated_button.dart';
-import '../../../main.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
+import '../../core/widget/elevated_button.dart';
+import '../../providers/data.dart';
 
 class Rating extends StatefulWidget {
   const Rating({super.key});
@@ -17,15 +17,18 @@ class Rating extends StatefulWidget {
 }
 
 class _RatingState extends State<Rating> {
+  int _exp = 3, _food = 3, _service = 3, _ambiance = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: screenSize.width < 640 ? screenSize.width : 640,
-          height: screenSize.height,
+          width: AppConstant.screenSize.width < 640
+              ? AppConstant.screenSize.width
+              : 640,
+          height: AppConstant.screenSize.height,
           child: Stack(children: [
-            Background(screenSize: screenSize),
+            Background(screenSize: AppConstant.screenSize),
             Align(
               alignment: Alignment.topCenter,
               child: SizedBox(
@@ -61,10 +64,9 @@ class _RatingState extends State<Rating> {
                           ),
                         ),
                         RatingBar.builder(
-                          initialRating: 3,
+                          initialRating: _exp.toDouble(),
                           minRating: 1,
                           direction: Axis.horizontal,
-                          allowHalfRating: true,
                           unratedColor: Colors.grey.withAlpha(50),
                           itemCount: 5,
                           itemPadding:
@@ -74,7 +76,7 @@ class _RatingState extends State<Rating> {
                             color: Color(0xFF4E8649),
                           ),
                           onRatingUpdate: (rating) {
-                            log(rating.toString(), name: 'Rating');
+                            _exp = rating.toInt();
                           },
                         ),
                       ],
@@ -103,10 +105,9 @@ class _RatingState extends State<Rating> {
                                 ),
                                 const Spacer(),
                                 RatingBar.builder(
-                                  initialRating: 3,
+                                  initialRating: _food.toDouble(),
                                   minRating: 1,
                                   direction: Axis.horizontal,
-                                  allowHalfRating: true,
                                   unratedColor: Colors.grey.withAlpha(50),
                                   itemCount: 5,
                                   itemPadding: const EdgeInsets.symmetric(
@@ -116,7 +117,7 @@ class _RatingState extends State<Rating> {
                                     color: Color(0xFF4E8649),
                                   ),
                                   onRatingUpdate: (rating) {
-                                    log(rating.toString(), name: 'Rating');
+                                    _food = rating.toInt();
                                   },
                                 )
                               ],
@@ -142,10 +143,9 @@ class _RatingState extends State<Rating> {
                                 ),
                                 const Spacer(),
                                 RatingBar.builder(
-                                  initialRating: 3,
+                                  initialRating: _service.toDouble(),
                                   minRating: 1,
                                   direction: Axis.horizontal,
-                                  allowHalfRating: true,
                                   unratedColor: Colors.grey.withAlpha(50),
                                   itemCount: 5,
                                   itemPadding: const EdgeInsets.symmetric(
@@ -155,7 +155,7 @@ class _RatingState extends State<Rating> {
                                     color: Color(0xFF4E8649),
                                   ),
                                   onRatingUpdate: (rating) {
-                                    log(rating.toString(), name: 'Rating');
+                                    _service = rating.toInt();
                                   },
                                 )
                               ],
@@ -181,10 +181,9 @@ class _RatingState extends State<Rating> {
                                 ),
                                 const Spacer(),
                                 RatingBar.builder(
-                                  initialRating: 3,
+                                  initialRating: _ambiance.toDouble(),
                                   minRating: 1,
                                   direction: Axis.horizontal,
-                                  allowHalfRating: true,
                                   unratedColor: Colors.grey.withAlpha(50),
                                   itemCount: 5,
                                   itemPadding: const EdgeInsets.symmetric(
@@ -194,7 +193,7 @@ class _RatingState extends State<Rating> {
                                     color: Color(0xFF4E8649),
                                   ),
                                   onRatingUpdate: (rating) {
-                                    log(rating.toString(), name: 'Rating');
+                                    _ambiance = rating.toInt();
                                   },
                                 )
                               ],
@@ -212,67 +211,16 @@ class _RatingState extends State<Rating> {
                             fontWeight: FontWeight.w600),
                       ),
                       onPressed: () {
+                        addRating(
+                            ratingData: RatingData(
+                          experience: 3,
+                          food: 3,
+                          services: 3,
+                          ambiance: 3,
+                        ));
                         context.goNamed(RouteNames.question.name);
                       },
                     ),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     context.go(RouteNames.question.path);
-                    //   },
-                    //   child: SizedBox(
-                    //     width: 316,
-                    //     height: 50,
-                    //     child: Stack(
-                    //       children: [
-                    //         Positioned(
-                    //           left: 0,
-                    //           top: 0,
-                    //           child: Container(
-                    //             width: 316,
-                    //             height: 50,
-                    //             decoration: ShapeDecoration(
-                    //               gradient: const LinearGradient(
-                    //                 begin: Alignment(1.00, 0.00),
-                    //                 end: Alignment(-1, 0),
-                    //                 colors: [
-                    //                   Color(0xFF76A968),
-                    //                   Color(0xFF4E8649)
-                    //                 ],
-                    //               ),
-                    //               shape: RoundedRectangleBorder(
-                    //                   borderRadius: BorderRadius.circular(5)),
-                    //               shadows: const [
-                    //                 BoxShadow(
-                    //                   color: Color(0x3F000000),
-                    //                   blurRadius: 4,
-                    //                   offset: Offset(0, 4),
-                    //                   spreadRadius: 0,
-                    //                 )
-                    //               ],
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         const Positioned(
-                    //           left: 120.18,
-                    //           top: 14,
-                    //           child: SizedBox(
-                    //             width: 76.67,
-                    //             child: Text(
-                    //               'Continue',
-                    //               style: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: 14,
-                    //                 fontFamily: 'Poppins',
-                    //                 fontWeight: FontWeight.w600,
-                    //                 height: 0,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 import '../../../config/router/route_names.dart';
-import '../../../core/widget/bg.dart';
-import '../../../core/widget/elevated_button.dart';
-import '../../../main.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
+import '../../core/widget/elevated_button.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -62,12 +62,14 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: screenSize.width < 640 ? screenSize.width : 640,
-          height: screenSize.height,
+          width: AppConstant.screenSize.width < 640
+              ? AppConstant.screenSize.width
+              : 640,
+          height: AppConstant.screenSize.height,
           child: Form(
             key: _registrationFormKey,
             child: Stack(children: [
-              Background(screenSize: screenSize),
+              Background(screenSize: AppConstant.screenSize),
               Align(
                 alignment: Alignment.center,
                 child: Column(
@@ -75,7 +77,8 @@ class _RegisterState extends State<Register> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: screenSize.height * 0.1),
+                      margin: EdgeInsets.only(
+                          top: AppConstant.screenSize.height * 0.1),
                       child: Text(
                         'Create Account',
                         textAlign: TextAlign.center,

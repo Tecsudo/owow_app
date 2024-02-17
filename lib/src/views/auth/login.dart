@@ -1,14 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 import '../../../config/router/route_names.dart';
-import '../../../core/widget/bg.dart';
-import '../../../core/widget/elevated_button.dart';
-import '../../../main.dart';
-import '../../api/auth.dart';
+import '../../core/constants/app_constant.dart';
+import '../../core/widget/bg.dart';
+import '../../core/widget/elevated_button.dart';
+import '../../providers/auth.dart';
 import '../../model/auth.dart';
 
 class Login extends StatefulWidget {
@@ -21,31 +18,28 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _authenticationFormKey = GlobalKey<FormState>();
 
-  // Switch between email and phone number
   bool _isEnteringPhoneNumber = false;
 
-  // Initially password is obscure
   bool _obscureText = true;
 
   final _emailOrPhoneController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Toggles the password show status/*  */
-  void _toggle() {
+  void _togglePassword() {
     setState(() {
       _obscureText = !_obscureText;
     });
   }
 
-  // Function to validate email format
-  // bool isValidEmail(String email) {
-  //   return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-  // }
+  void _togglePhone() {
+    setState(() {
+      _isEnteringPhoneNumber = !_isEnteringPhoneNumber;
+    });
+  }
 
   bool isEmailOrPhoneNumber(String input) {
     bool isEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(input);
-    bool isPhoneNumber = RegExp(r'^03[0-9]{9}$')
-        .hasMatch(input); // Assuming Pakistani phone number format
+    bool isPhoneNumber = RegExp(r'^03[0-9]{9}$').hasMatch(input);
 
     return isEmail || isPhoneNumber;
   }
@@ -55,12 +49,14 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: screenSize.width < 640 ? screenSize.width : 640,
-          height: screenSize.height,
+          width: AppConstant.screenSize.width < 640
+              ? AppConstant.screenSize.width
+              : 640,
+          height: AppConstant.screenSize.height,
           child: Form(
             key: _authenticationFormKey,
             child: Stack(children: [
-              Background(screenSize: screenSize),
+              Background(screenSize: AppConstant.screenSize),
               Align(
                 alignment: Alignment.center,
                 child: Column(
@@ -68,7 +64,8 @@ class _LoginState extends State<Login> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: screenSize.height * 0.1),
+                      margin: EdgeInsets.only(
+                          top: AppConstant.screenSize.height * 0.1),
                       child: Text(
                         'Login Here',
                         textAlign: TextAlign.center,
@@ -100,23 +97,6 @@ class _LoginState extends State<Login> {
                       width: 313,
                       child: Column(
                         children: [
-                          LiteRollingSwitch(
-                            value: _isEnteringPhoneNumber,
-                            onTap: () {},
-                            onDoubleTap: () {},
-                            onSwipe: () {},
-                            textOn: 'Email',
-                            textOff: 'Phone',
-                            colorOn: const Color(0xFF4E8649),
-                            colorOff: const Color(0xFF4E8649),
-                            iconOn: Icons.email,
-                            iconOff: Icons.phone,
-                            onChanged: (bool state) {
-                              setState(() {
-                                _isEnteringPhoneNumber = state;
-                              });
-                            },
-                          ),
                           const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
@@ -134,6 +114,14 @@ class _LoginState extends State<Login> {
                                   fontWeight: FontWeight.w400,
                                 ),
                                 decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: _togglePhone,
+                                    icon: Icon(
+                                      !_isEnteringPhoneNumber
+                                          ? Icons.phone
+                                          : Icons.mail,
+                                    ),
+                                  ),
                                   border: InputBorder.none,
                                   hintText: _isEnteringPhoneNumber
                                       ? 'user@exapmle.com'
@@ -179,7 +167,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 decoration: InputDecoration(
                                   suffixIcon: IconButton(
-                                    onPressed: _toggle,
+                                    onPressed: _togglePassword,
                                     icon: Icon(
                                       !_obscureText
                                           ? Icons.visibility
@@ -206,20 +194,20 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              const Text('Forgot Password? '),
-                              TextButton(
-                                child: const Text(
-                                  'Click Here',
-                                ),
-                                onPressed: () {
-                                  //TODO: Implement Forgot Password
-                                },
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: <Widget>[
+                          //     const Text('Forgot Password? '),
+                          //     TextButton(
+                          //       child: const Text(
+                          //         'Click Here',
+                          //       ),
+                          //       onPressed: () {
+                          //         //TODO: Implement Forgot Password
+                          //       },
+                          //     )
+                          //   ],
+                          // ),
                         ],
                       ),
                     ),
@@ -240,13 +228,7 @@ class _LoginState extends State<Login> {
                             isEnteringPhoneNumber: _isEnteringPhoneNumber,
                             emailOrPhone: _emailOrPhoneController.text,
                           )).then((value) =>
-                              log(value, name: 'Login API response'));
-                          // Here you can perform authentication or navigate to another screen
-                          // For demo purposes, print the email and password
-
-                          context.goNamed(RouteNames.register.name);
-                          // log(_emailOrPhoneController.text, name: 'Email');
-                          // log(_passwordController.text, name: 'Password');
+                              context.goNamed(RouteNames.rating.name));
                         }
                       },
                     ),
